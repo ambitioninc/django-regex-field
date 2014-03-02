@@ -1,0 +1,3 @@
+include regex_field/VERSION
+include README.md
+include LICENSE
