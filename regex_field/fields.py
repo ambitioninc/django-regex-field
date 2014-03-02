@@ -37,7 +37,7 @@ class RegexField(CharField):
 
     def value_to_string(self, obj):
         if obj is None:
-            return 'None'
+            return None
         else:
             return obj.pattern
 
