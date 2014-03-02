@@ -48,6 +48,8 @@ class RegexFieldTest(TestCase):
         """
         test_obj = NullTrueModel.objects.create(regex=None)
         self.assertEquals(test_obj.regex, None)
+        test_obj = NullTrueModel.objects.get(id=test_obj.id)
+        self.assertEquals(test_obj.regex, None)
 
     def test_save_str(self):
         """
