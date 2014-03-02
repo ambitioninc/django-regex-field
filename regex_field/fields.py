@@ -11,10 +11,17 @@ class RegexField(CharField):
     """
     description = 'A regular expression'
     __metaclass__ = SubfieldBase
+    # Maintain a cache of compiled regexs for faster lookup
+    compiled_regex_cache = {}
 
     def get_prep_value(self, value):
         value = self.to_python(value)
         return self.value_to_string(value)
+
+    def get_compiled_regex(self, value):
+        if value not in self.compiled_regex_cache:
+            self.compiled_regex_cache[value] = re.compile(value)
+        return self.compiled_regex_cache[value]
 
     def to_python(self, value):
         """
@@ -31,7 +38,7 @@ class RegexField(CharField):
                 return None
             else:
                 try:
-                    return re.compile(value)
+                    return self.get_compiled_regex(value)
                 except:
                     raise ValidationError('Invalid regex {0}'.format(value))
 
