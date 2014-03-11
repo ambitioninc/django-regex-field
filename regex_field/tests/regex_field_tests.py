@@ -4,7 +4,7 @@ from mock import patch
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 
-from test_project.models import RegexModel, BlankTrueModel, NullTrueModel
+from .models import RegexModel, BlankTrueModel, NullTrueModel
 
 
 class RegexFieldTest(TestCase):
