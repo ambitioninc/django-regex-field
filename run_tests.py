@@ -1,7 +1,8 @@
 """
 Provides the ability to run test on a standalone Django app.
 """
-import os, sys
+import os
+import sys
 from django.conf import settings
 from optparse import OptionParser
 
