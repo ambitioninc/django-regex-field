@@ -22,7 +22,7 @@ if not settings.configured:
         db_config = {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'USER': 'postgres',
-            'NAME': 'manager_utils',
+            'NAME': 'regex_field',
         }
     else:
         raise RuntimeError('Unsupported test DB {0}'.format(test_db))
