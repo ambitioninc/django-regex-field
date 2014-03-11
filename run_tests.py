@@ -36,6 +36,7 @@ if not settings.configured:
             'django.contrib.contenttypes',
             'django.contrib.sessions',
             'django.contrib.admin',
+            'south',
             'regex_field',
             'regex_field.tests',
         ),
