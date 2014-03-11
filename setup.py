@@ -41,6 +41,6 @@ setup(
         'django-nose',
         'south',
     ],
-    test_suite='runtests.runtests',
+    test_suite='run_tests.run_tests',
     include_package_data=True,
 )
