@@ -18,7 +18,7 @@ if not settings.configured:
             'PASSWORD': 'ambition_dev',
             'HOST': 'localhost'
         }
-    elif test_db == 'POSTGRES':
+    elif test_db == 'postgres':
         db_config = {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'USER': 'postgres',
