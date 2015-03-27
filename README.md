@@ -1,7 +1,5 @@
 [![Build Status](https://travis-ci.org/ambitioninc/django-regex-field.png)](https://travis-ci.org/ambitioninc/django-regex-field)
 
-[![Coverage Status](https://coveralls.io/repos/ambitioninc/django-regex-field/badge.svg)](https://coveralls.io/r/ambitioninc/django-regex-field)
-
 # django-regex-field
 
 Stores regular expressions in Django models.
