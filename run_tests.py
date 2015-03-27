@@ -1,49 +1,19 @@
 """
 Provides the ability to run test on a standalone Django app.
 """
-import os
 import sys
+import django
 from django.conf import settings
 from optparse import OptionParser
 
+from settings import configure_settings
 
-if not settings.configured:
-    # Determine the database settings depending on if a test_db var is set in CI mode or not
-    test_db = os.environ.get('DB', None)
-    if test_db is None:
-        db_config = {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'ambition_dev',
-            'USER': 'ambition_dev',
-            'PASSWORD': 'ambition_dev',
-            'HOST': 'localhost'
-        }
-    elif test_db == 'postgres':
-        db_config = {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'USER': 'postgres',
-            'NAME': 'regex_field',
-        }
-    else:
-        raise RuntimeError('Unsupported test DB {0}'.format(test_db))
+# Configure the default settings and setup django
+configure_settings()
+if django.VERSION[1] >= 7:
+    django.setup()
 
-    settings.configure(
-        DATABASES={
-            'default': db_config,
-        },
-        INSTALLED_APPS=(
-            'django.contrib.auth',
-            'django.contrib.contenttypes',
-            'django.contrib.sessions',
-            'django.contrib.admin',
-            'south',
-            'regex_field',
-            'regex_field.tests',
-        ),
-        ROOT_URLCONF='regex_field.urls',
-        DEBUG=False,
-    )
-
+# Django nose must be imported here since it depends on the settings being configured
 from django_nose import NoseTestSuiteRunner
 
 
