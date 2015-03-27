@@ -4,7 +4,7 @@ from mock import patch
 import six
 if six.PY2:  # pragma: no cover
     from six.moves import builtins as builtins
-else:
+else:  # pragma: no cover
     from importlib import reload
     import builtins
 
