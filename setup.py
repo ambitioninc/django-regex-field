@@ -28,18 +28,22 @@ setup(
     packages=find_packages(),
     classifiers=[
         'Programming Language :: Python',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.4',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: BSD License',
+        'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
         'Framework :: Django',
     ],
     install_requires=[
-        'django>=1.4',
+        'django>=1.5',
+        'six'
     ],
     tests_require=[
         'psycopg2',
         'django-nose',
-        'south',
+        'south>=1.0.2',
+        'mock',
     ],
     test_suite='run_tests.run_tests',
     include_package_data=True,
