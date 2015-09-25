@@ -45,11 +45,7 @@ setup(
     tests_require=[
         'psycopg2',
         'django-nose>=1.4',
-        'six'
-    ],
-    tests_require=[
-        'psycopg2',
-        'django-nose',
+        'six',
         'mock',
     ],
     test_suite='run_tests.run_tests',
