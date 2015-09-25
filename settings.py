@@ -1,6 +1,5 @@
 import os
 
-import django
 from django.conf import settings
 
 
@@ -8,8 +7,6 @@ def configure_settings():
     """
     Configures settings for manage.py and for run_tests.py.
     """
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
-
     if not settings.configured:
         # Determine the database settings depending on if a test_db var is set in CI mode or not
         test_db = os.environ.get('DB', None)
@@ -27,6 +24,11 @@ def configure_settings():
                 'USER': 'postgres',
                 'NAME': 'regex_field',
             }
+        elif test_db == 'sqlite':
+            db_config = {
+                'ENGINE': 'django.db.backends.sqlite3',
+                'NAME': 'regex_field',
+            }
         else:
             raise RuntimeError('Unsupported test DB {0}'.format(test_db))
 
@@ -38,8 +40,6 @@ def configure_settings():
             'regex_field',
             'regex_field.tests',
         ]
-        if django.VERSION[1] < 7:
-            installed_apps.append('south')
 
         settings.configure(
             DATABASES={
@@ -50,4 +50,5 @@ def configure_settings():
             ROOT_URLCONF='regex_field.urls',
             DEBUG=False,
             NOSE_ARGS=['--nocapture', '--nologcapture', '--verbosity=1'],
+            TEST_RUNNER='django_nose.NoseTestSuiteRunner',
         )

@@ -4,14 +4,17 @@ python:
   - '2.7'
   - '3.4'
 env:
-  - DJANGO=1.5.12 DB=postgres
-  - DJANGO=1.6.11 DB=postgres
-  - DJANGO=1.7.7 DB=postgres
+  global:
+    - DB=postgres
+  matrix:
+    - DJANGO=">=1.7,<1.8"
+    - DJANGO=">=1.8,<1.9"
 install:
-  - pip install -q coverage flake8 Django==$DJANGO
+  - pip install -q coverage flake8 psycopg2 Django$DJANGO
 before_script:
+  - flake8 .
   - psql -c 'CREATE DATABASE regex_field;' -U postgres
 script:
-  - flake8 .
   - coverage run setup.py test
   - coverage report --fail-under=100
+

@@ -1,4 +1,4 @@
-# import multiprocessing to avoid this bug (http://bugs.python.org/issue15881#msg170215_
+# import multiprocessing to avoid this bug (http://bugs.python.org/issue15881#msg170215)
 import multiprocessing
 assert multiprocessing
 import re
@@ -20,11 +20,12 @@ def get_version():
 setup(
     name='django-regex-field',
     version=get_version(),
-    description='Store regular expressions in Django models',
+    description='Django Regex Field',
     long_description=open('README.md').read(),
-    url='http://github.com/ambitioninc/django-regex-field/',
+    url='https://github.com/ambitioninc/django-regex-field',
     author='Wes Kendall',
-    author_email='wesleykendall@gmail.com',
+    author_email='opensource@ambition.com',
+    keywords='Django, Regex Field',
     packages=find_packages(),
     classifiers=[
         'Programming Language :: Python',
@@ -34,17 +35,20 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
         'Framework :: Django',
+        'Framework :: Django :: 1.7',
+        'Framework :: Django :: 1.8',
     ],
+    license='MIT',
     install_requires=[
-        'django>=1.5',
-        'six'
+        'django>=1.7',
+        'six',
     ],
     tests_require=[
         'psycopg2',
-        'django-nose',
-        'south>=1.0.2',
+        'django-nose>=1.4',
         'mock',
     ],
     test_suite='run_tests.run_tests',
     include_package_data=True,
+    zip_safe=False,
 )

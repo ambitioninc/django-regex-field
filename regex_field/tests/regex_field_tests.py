@@ -1,13 +1,4 @@
 import re
-from mock import patch
-
-import six
-if six.PY2:  # pragma: no cover
-    from six.moves import builtins as builtins
-else:  # pragma: no cover
-    from importlib import reload
-    import builtins
-
 
 from django.core.exceptions import ValidationError
 from django.test import TestCase
@@ -19,30 +10,6 @@ class RegexFieldTest(TestCase):
     """
     Tests storing and calling functions/classes that are stored in test models.
     """
-    def test_without_south(self):
-        """
-        Tests that the regex field still works fine without south installed.
-        """
-        # Create a mock function that raises an ImportError when souths modelsinspector is
-        # imported
-        orig_import = __import__
-
-        def import_mock(name, *args):
-            if name == 'south.modelsinspector':
-                raise ImportError
-            return orig_import(name, *args)
-
-        # Reload the field where we do south-specific stuff. Do this while raising an
-        # import error for south
-        with patch.object(builtins, '__import__', side_effect=import_mock):
-            from regex_field import fields
-            reload(fields)
-
-        test_obj = RegexModel.objects.create(regex='a')
-        # Test the test class's get_arg and get_kwarg functions
-        self.assertNotEqual(test_obj.regex.match('a'), None)
-        self.assertEqual(test_obj.regex.match('b'), None)
-
     def test_blank(self):
         """
         Tests that blank regexs can be saved with blank=True.
