@@ -49,10 +49,3 @@ class RegexField(CharField):
             return None
         else:
             return obj.pattern
-
-
-try:
-    from south.modelsinspector import add_introspection_rules
-    add_introspection_rules([], ['^regex_field\.fields\.RegexField'])
-except ImportError:
-    pass
