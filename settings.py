@@ -22,31 +22,33 @@ def configure_settings():
             db_config = {
                 'ENGINE': 'django.db.backends.postgresql_psycopg2',
                 'USER': 'postgres',
-                'NAME': 'activatable_model',
+                'NAME': 'regex_field',
             }
         elif test_db == 'sqlite':
             db_config = {
                 'ENGINE': 'django.db.backends.sqlite3',
-                'NAME': 'activatable_model',
+                'NAME': 'regex_field',
             }
         else:
             raise RuntimeError('Unsupported test DB {0}'.format(test_db))
 
+        installed_apps = [
+            'django.contrib.auth',
+            'django.contrib.contenttypes',
+            'django.contrib.sessions',
+            'django.contrib.admin',
+            'regex_field',
+            'regex_field.tests',
+        ]
+
         settings.configure(
-            TEST_RUNNER='django_nose.NoseTestSuiteRunner',
-            NOSE_ARGS=['--nocapture', '--nologcapture', '--verbosity=1'],
-            MIDDLEWARE_CLASSES={},
             DATABASES={
                 'default': db_config,
             },
-            INSTALLED_APPS=(
-                'django.contrib.auth',
-                'django.contrib.contenttypes',
-                'django.contrib.sessions',
-                'django.contrib.admin',
-                'regex_field',
-                'regex_field.tests',
-            ),
+            MIDDLEWARE_CLASSES={},
+            INSTALLED_APPS=installed_apps,
             ROOT_URLCONF='regex_field.urls',
             DEBUG=False,
+            NOSE_ARGS=['--nocapture', '--nologcapture', '--verbosity=1'],
+            TEST_RUNNER='django_nose.NoseTestSuiteRunner',
         )
