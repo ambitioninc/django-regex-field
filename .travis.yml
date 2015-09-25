@@ -1,16 +1,19 @@
+sudo: false
 language: python
 python:
   - '2.7'
+  - '3.4'
 env:
-  - DJANGO=1.4 DB=postgres
-  - DJANGO=1.5 DB=postgres
-  - DJANGO=1.6.1 DB=postgres
+  global:
+    - DB=postgres
+  matrix:
+    - DJANGO=">=1.7,<1.8"
+    - DJANGO=">=1.8,<1.9"
 install:
-  - pip install -q coverage pep8 pyflakes Django==$DJANGO
+  - pip install -q coverage flake8 psycopg2 Django$DJANGO
 before_script:
-  - find . | grep .py$ | grep -v /migrations | xargs pep8 --max-line-length=120
-  - find . | grep .py$ | grep -v /migrations | grep -v __init__.py | xargs pyflakes
+  - flake8 .
   - psql -c 'CREATE DATABASE regex_field;' -U postgres
 script:
-  - coverage run --source='regex_field' --branch setup.py test
+  - coverage run setup.py test
   - coverage report --fail-under=100
