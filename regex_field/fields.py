@@ -45,7 +45,11 @@ class RegexField(CharField):
                     raise ValidationError('Invalid regex {0}'.format(value))
 
     def value_to_string(self, obj):
-        if obj is None:
-            return None
-        else:
-            return obj.pattern
+	"""
+	It returns the pattern of regular expression only if the obj is
+        an instance of regex object, otherwise it returns empty string.
+	"""
+	if isinstance(obj, re._pattern_type):
+	    return obj.pattern
+	else:	    
+	    return ''
