@@ -12,7 +12,7 @@ class RegexField(CharField):
     # Maintain a cache of compiled regexs for faster lookup
     compiled_regex_cache = {}
 
-    def get_prep_value(self, value):
+    def get_db_prep_value(self, value, connection, prepared=False):
         value = self.to_python(value)
         return self.value_to_string(value)
 
@@ -20,6 +20,9 @@ class RegexField(CharField):
         if value not in self.compiled_regex_cache:
             self.compiled_regex_cache[value] = re.compile(value)
         return self.compiled_regex_cache[value]
+
+    def from_db_value(self, value, expression, connection, context):
+        return self.to_python(value)
 
     def to_python(self, value):
         """
