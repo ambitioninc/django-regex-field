@@ -1,13 +1,9 @@
 import re
 
-from six import add_metaclass
-
 from django.core.exceptions import ValidationError
-from django.db.models import SubfieldBase
 from django.db.models.fields import CharField
 
 
-@add_metaclass(SubfieldBase)
 class RegexField(CharField):
     """
     A field that stores a regular expression and compiles it when accessed.
