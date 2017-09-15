@@ -1,6 +1,6 @@
 from django.db import models
 
-from regex_field import RegexField
+from regex_field.fields import RegexField
 
 
 class RegexModel(models.Model):
