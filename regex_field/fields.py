@@ -17,7 +17,7 @@ class CastOnAssignDescriptor(object):
         self.field = field
 
     def __get__(self, obj, type=None):
-        if obj is None:
+        if obj is None:  # pragma: no cover
             return self
         return obj.__dict__[self.field.name]
 
