@@ -4,6 +4,27 @@ from django.core.exceptions import ValidationError
 from django.db.models.fields import CharField
 
 
+class CastOnAssignDescriptor(object):
+    """
+    A property descriptor which ensures that `field.to_python()` is called on _every_ assignment to the field.
+    This used to be provided by the `django.db.models.subclassing.Creator` class, which in turn
+    was used by the deprecated-in-Django-1.10 `SubfieldBase` class, hence the reimplementation here.
+    Copied from https://stackoverflow.com/questions/
+    39392343/how-do-i-make-a-custom-model-field-call-to-python-when-the-field-is-accessed-imm
+    """
+
+    def __init__(self, field):
+        self.field = field
+
+    def __get__(self, obj, type=None):
+        if obj is None:
+            return self
+        return obj.__dict__[self.field.name]
+
+    def __set__(self, obj, value):
+        obj.__dict__[self.field.name] = self.field.to_python(value)
+
+
 class RegexField(CharField):
     """
     A field that stores a regular expression and compiles it when accessed.
@@ -23,6 +44,13 @@ class RegexField(CharField):
 
     def from_db_value(self, value, expression, connection, context):
         return self.to_python(value)
+
+    def contribute_to_class(self, cls, name, virtual_only=False):
+        """
+        Cast to the correct value every
+        """
+        super(RegexField, self).contribute_to_class(cls, name, virtual_only)
+        setattr(cls, name, CastOnAssignDescriptor(self))
 
     def to_python(self, value):
         """

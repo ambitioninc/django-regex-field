@@ -15,7 +15,6 @@ class RegexFieldTest(TestCase):
         Tests that blank regexs can be saved with blank=True.
         """
         test_obj = BlankTrueModel.objects.create(regex='')
-        test_obj.refresh_from_db()
         self.assertEqual(test_obj.regex, re.compile(''))
 
     def test_null(self):
@@ -32,7 +31,6 @@ class RegexFieldTest(TestCase):
         Tests that regex strings are saved and accessed properly.
         """
         test_obj = RegexModel.objects.create(regex='a')
-        test_obj.refresh_from_db()
         self.assertIsNotNone(test_obj.regex.match('a'))
         self.assertIsNone(test_obj.regex.match('b'))
 
