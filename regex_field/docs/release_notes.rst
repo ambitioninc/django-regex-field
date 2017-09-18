@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v0.3.1
+------
+* Restore old behavior of subfieldbase
+
 v0.3.0
 ------
 * Drop Django 1.7 support
