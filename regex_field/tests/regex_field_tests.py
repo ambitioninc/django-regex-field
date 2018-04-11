@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError
 from django.core.management import call_command
 from django.test import TestCase
 
+from regex_field.fields import RegexField
 from .models import RegexModel, BlankTrueModel, NullTrueModel
 
 
@@ -126,3 +127,10 @@ class RegexFieldTest(TestCase):
         self.assertIsNotNone(regex_model.with_options.match('ABcd'))
         self.assertIsNotNone(regex_model.with_options.match('abcd'))
         self.assertIsNotNone(regex_model.with_options.match('abCD'))
+
+    def test_value_to_string(self):
+        """
+        This is for coverage to hit the end of the block and return None
+        """
+        field = RegexField()
+        self.assertIsNone(field.value_to_string(object()))
