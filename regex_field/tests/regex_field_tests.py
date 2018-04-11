@@ -74,3 +74,4 @@ class RegexFieldTest(TestCase):
 
         regex_model = RegexModel(with_validator='1234')
         regex_model.clean_fields()
+        regex_model.save()
