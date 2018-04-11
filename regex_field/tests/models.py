@@ -1,3 +1,6 @@
+import re
+
+from django.core.validators import MaxLengthValidator
 from django.db import models
 
 from regex_field.fields import RegexField
@@ -8,6 +11,8 @@ class RegexModel(models.Model):
     A model for testing saving and compiling of regexs.
     """
     regex = RegexField(max_length=128)
+    with_validator = RegexField(max_length=128, validators=[MaxLengthValidator(4)])
+    with_options = RegexField(max_length=128, re_flags=re.IGNORECASE | re.UNICODE)
 
 
 class BlankTrueModel(models.Model):

@@ -1,8 +1,10 @@
 import re
 
 from django.core.exceptions import ValidationError
+from django.core.management import call_command
 from django.test import TestCase
 
+from regex_field.fields import RegexField
 from .models import RegexModel, BlankTrueModel, NullTrueModel
 
 
@@ -63,3 +65,72 @@ class RegexFieldTest(TestCase):
         """
         with self.assertRaises(ValidationError):
             RegexModel.objects.create(regex='he(lo')
+
+    def test_validators(self):
+        """
+        Run clean_fields to catch validator issues
+        """
+        regex_model = RegexModel(with_validator='12345')
+        with self.assertRaises(ValidationError):
+            regex_model.clean_fields()
+
+        regex_model = RegexModel(with_validator='1234')
+        regex_model.clean_fields()
+        regex_model.save()
+
+    def test_dumpdata(self):
+        """
+        Make sure django can serializer the model
+        """
+        regex_model = RegexModel(with_validator='1234')
+        regex_model.clean_fields()
+        regex_model.save()
+
+        call_command('dumpdata')
+
+    def test_loaddata(self):
+        """
+        Make sure django can deserialize the model
+        """
+        call_command('loaddata', 'data.json')
+
+        regex_model = RegexModel.objects.get()
+        self.assertEqual(regex_model.with_validator.pattern, '1234')
+
+    def test_re_flags(self):
+        """
+        Apply re options when being created
+        """
+        regex_model = RegexModel(regex='ABcd', with_options='ABcd')
+
+        # Test case sensitive field
+        self.assertIsNone(regex_model.regex.match('abcd'))
+        self.assertIsNotNone(regex_model.regex.match('ABcd'))
+
+        # Test case insensitive field
+        self.assertIsNotNone(regex_model.with_options.match('ABcd'))
+        self.assertIsNotNone(regex_model.with_options.match('abcd'))
+        self.assertIsNotNone(regex_model.with_options.match('abCD'))
+
+        # Save the model to the db
+        regex_model.save()
+
+        # Reload the model and check that the flags are still respected
+        regex_model = RegexModel.objects.get(id=regex_model.id)
+
+        # Test case sensitive field
+        self.assertIsNone(regex_model.regex.match('abcd'))
+        self.assertIsNotNone(regex_model.regex.match('ABcd'))
+        self.assertIsNotNone(regex_model.regex.match('ABcd'))
+
+        # Test case insensitive field
+        self.assertIsNotNone(regex_model.with_options.match('ABcd'))
+        self.assertIsNotNone(regex_model.with_options.match('abcd'))
+        self.assertIsNotNone(regex_model.with_options.match('abCD'))
+
+    def test_value_to_string(self):
+        """
+        This is for coverage to hit the end of the block and return None
+        """
+        field = RegexField()
+        self.assertIsNone(field.value_to_string(object()))

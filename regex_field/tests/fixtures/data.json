@@ -1,0 +1,11 @@
+[
+  {
+    "model": "tests.regexmodel",
+    "pk": 1,
+    "fields": {
+      "regex": "",
+      "with_validator": "1234",
+      "with_options": ""
+    }
+  }
+]
