@@ -26,4 +26,25 @@ model_obj = RegexModel.objects.create(regex='a')
 # Access the regex as a compiled regular expression
 >>> print(model_obj.regex.match('b'))
 None
+
+## Using regex flags
+Flags can be provided in the field definition and will be applied when the regex is compiled. If you manually
+compile a regex object with other flags and set it on the model, those flags will not be preserved. Only the flags
+passed to the field's constructor are used.
+```python
+import re
+from django.db import models
+from regex_field.fields import RegexField
+
+
+class RegexModel(models.Model):
+    regex = RegexField(max_length=128, re_flags=re.IGNORECASE)
+
+
+model_obj = RegexModel.objects.create(regex='A')
+
+# Case insensitive matching
+>>> print(model_obj.regex.match('a') is not None)
+True
+
 ```
