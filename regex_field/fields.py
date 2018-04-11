@@ -84,12 +84,20 @@ class RegexField(CharField):
                     raise ValidationError('Invalid regex {0}'.format(value))
 
     def value_to_string(self, obj):
-        # Django passes a model instead of the value when serializing for dumpdata
+        # Return None if obj is None
         if obj is None:
             return None
+
+        # Django passes a model instead of the value when serializing for dumpdata
         if issubclass(obj.__class__, Model):
             obj = self.value_from_object(obj)
-        return obj.pattern
+
+        # Check for re type before accessing pattern
+        if isinstance(obj, re._pattern_type):
+            return obj.pattern
+
+        # Return None by default
+        return None
 
     def run_validators(self, value):
         """
