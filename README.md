@@ -14,7 +14,7 @@ them as compiled regular expressions from your models.
 A regular expression can be stored and retrieved in a Django model as follows:
 ```python
 from django.db import models
-from regex_field import RegexField
+from regex_field.fields import RegexField
 
 
 class RegexModel(models.Model):
