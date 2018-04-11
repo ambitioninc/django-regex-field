@@ -26,6 +26,7 @@ model_obj = RegexModel.objects.create(regex='a')
 # Access the regex as a compiled regular expression
 >>> print(model_obj.regex.match('b'))
 None
+```
 
 ## Using regex flags
 Flags can be provided in the field definition and will be applied when the regex is compiled. If you manually
@@ -46,5 +47,4 @@ model_obj = RegexModel.objects.create(regex='A')
 # Case insensitive matching
 >>> print(model_obj.regex.match('a') is not None)
 True
-
 ```
