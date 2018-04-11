@@ -1,6 +1,7 @@
 import re
 
 from django.core.exceptions import ValidationError
+from django.db.models import Model
 from django.db.models.fields import CharField
 
 
@@ -72,10 +73,12 @@ class RegexField(CharField):
                     raise ValidationError('Invalid regex {0}'.format(value))
 
     def value_to_string(self, obj):
+        # Django passes a model instead of the value when serializing for dumpdata
         if obj is None:
             return None
-        else:
-            return obj.pattern
+        if issubclass(obj.__class__, Model):
+            obj = self.value_from_object(obj)
+        return obj.pattern
 
     def run_validators(self, value):
         """

@@ -1,6 +1,8 @@
 import re
 
 from django.core.exceptions import ValidationError
+from django.core.management import call_command
+from django.core.serializers.base import Serializer
 from django.test import TestCase
 
 from .models import RegexModel, BlankTrueModel, NullTrueModel
@@ -75,3 +77,22 @@ class RegexFieldTest(TestCase):
         regex_model = RegexModel(with_validator='1234')
         regex_model.clean_fields()
         regex_model.save()
+
+    def test_dumpdata(self):
+        """
+        Make sure django can serializer the model
+        """
+        regex_model = RegexModel(with_validator='1234')
+        regex_model.clean_fields()
+        regex_model.save()
+
+        call_command('dumpdata')
+
+    def test_loaddata(self):
+        """
+        Make sure django can deserialize the model
+        """
+        call_command('loaddata', 'data.json')
+
+        regex_model = RegexModel.objects.get()
+        self.assertEqual(regex_model.with_validator.pattern, '1234')
