@@ -1,6 +1,14 @@
 Release Notes
 =============
 
+v1.2.0
+------
+* Fix dumpdata https://github.com/ambitioninc/django-regex-field/issues/11
+* Fix django validators issue https://github.com/ambitioninc/django-regex-field/issues/14
+* Fix import statement in docs https://github.com/ambitioninc/django-regex-field/issues/25
+* Allow flags option on field definition https://github.com/ambitioninc/django-regex-field/issues/26
+* Add type check when getting pattern (pull request from Qiao-Liang)
+
 v1.1.0
 ------
 * Add tox to support more versions
