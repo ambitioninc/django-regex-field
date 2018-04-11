@@ -63,3 +63,14 @@ class RegexFieldTest(TestCase):
         """
         with self.assertRaises(ValidationError):
             RegexModel.objects.create(regex='he(lo')
+
+    def test_validators(self):
+        """
+        Run clean_fields to catch validator issues
+        """
+        regex_model = RegexModel(with_validator='12345')
+        with self.assertRaises(ValidationError):
+            regex_model.clean_fields()
+
+        regex_model = RegexModel(with_validator='1234')
+        regex_model.clean_fields()

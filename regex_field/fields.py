@@ -76,3 +76,11 @@ class RegexField(CharField):
             return None
         else:
             return obj.pattern
+
+    def run_validators(self, value):
+        """
+        Make sure value is a string so it can run through django validators
+        """
+        value = self.to_python(value)
+        value = self.value_to_string(value)
+        return super(RegexField, self).run_validators(value)
