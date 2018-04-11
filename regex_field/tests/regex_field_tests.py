@@ -2,7 +2,6 @@ import re
 
 from django.core.exceptions import ValidationError
 from django.core.management import call_command
-from django.core.serializers.base import Serializer
 from django.test import TestCase
 
 from .models import RegexModel, BlankTrueModel, NullTrueModel
@@ -96,3 +95,34 @@ class RegexFieldTest(TestCase):
 
         regex_model = RegexModel.objects.get()
         self.assertEqual(regex_model.with_validator.pattern, '1234')
+
+    def test_re_flags(self):
+        """
+        Apply re options when being created
+        """
+        regex_model = RegexModel(regex='ABcd', with_options='ABcd')
+
+        # Test case sensitive field
+        self.assertIsNone(regex_model.regex.match('abcd'))
+        self.assertIsNotNone(regex_model.regex.match('ABcd'))
+
+        # Test case insensitive field
+        self.assertIsNotNone(regex_model.with_options.match('ABcd'))
+        self.assertIsNotNone(regex_model.with_options.match('abcd'))
+        self.assertIsNotNone(regex_model.with_options.match('abCD'))
+
+        # Save the model to the db
+        regex_model.save()
+
+        # Reload the model and check that the flags are still respected
+        regex_model = RegexModel.objects.get(id=regex_model.id)
+
+        # Test case sensitive field
+        self.assertIsNone(regex_model.regex.match('abcd'))
+        self.assertIsNotNone(regex_model.regex.match('ABcd'))
+        self.assertIsNotNone(regex_model.regex.match('ABcd'))
+
+        # Test case insensitive field
+        self.assertIsNotNone(regex_model.with_options.match('ABcd'))
+        self.assertIsNotNone(regex_model.with_options.match('abcd'))
+        self.assertIsNotNone(regex_model.with_options.match('abCD'))
