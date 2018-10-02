@@ -93,7 +93,7 @@ class RegexField(CharField):
             obj = self.value_from_object(obj)
 
         # Check for re type before accessing pattern
-        if isinstance(obj, re._pattern_type):
+        if isinstance(obj, re.Pattern):
             return obj.pattern
 
         # Return None by default
