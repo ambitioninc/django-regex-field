@@ -5,6 +5,9 @@ from django.db.models import Model
 from django.db.models.fields import CharField
 
 
+_PATTER_TYPE = type(re.compile(''))
+
+
 class CastOnAssignDescriptor(object):
     """
     A property descriptor which ensures that `field.to_python()` is called on _every_ assignment to the field.
@@ -93,7 +96,7 @@ class RegexField(CharField):
             obj = self.value_from_object(obj)
 
         # Check for re type before accessing pattern
-        if isinstance(obj, re._pattern_type):
+        if isinstance(obj, _PATTER_TYPE):
             return obj.pattern
 
         # Return None by default
