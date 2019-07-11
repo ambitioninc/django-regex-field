@@ -41,7 +41,7 @@ setup(
     ],
     license='MIT',
     install_requires=[
-        'Django>=1.11',
+        'Django>=2.0',
         'six',
     ],
     tests_require=[
