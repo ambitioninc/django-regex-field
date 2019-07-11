@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+v1.3.0
+------
+* Python 3.7
+* Django 2.2
+
 v1.2.0
 ------
 * Fix dumpdata https://github.com/ambitioninc/django-regex-field/issues/11
