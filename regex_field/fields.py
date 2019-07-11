@@ -92,8 +92,14 @@ class RegexField(CharField):
         if issubclass(obj.__class__, Model):
             obj = self.value_from_object(obj)
 
+        try:  # pragma: no cover
+            # Does not exist in python 3.7
+            pattern_type = re._pattern_type
+        except AttributeError:  # pragma: no cover
+            pattern_type = re.Pattern
+
         # Check for re type before accessing pattern
-        if isinstance(obj, re._pattern_type):
+        if isinstance(obj, pattern_type):
             return obj.pattern
 
         # Return None by default
