@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v1.3.1
+------
+* Fix setup file
+
 v1.3.0
 ------
 * Python 3.7
