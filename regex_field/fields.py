@@ -61,7 +61,7 @@ class RegexField(CharField):
                 self.compiled_regex_cache[cache_key] = re.compile(value, flags=self.re_flags)
         return self.compiled_regex_cache[cache_key]
 
-    def from_db_value(self, value, expression, connection, context):
+    def from_db_value(self, value, expression, connection):
         return self.to_python(value)
 
     def contribute_to_class(self, cls, name, virtual_only=False):
