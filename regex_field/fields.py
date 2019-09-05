@@ -48,13 +48,20 @@ class RegexField(CharField):
     def get_compiled_regex(self, value):
         cache_key = self.get_cache_key(value, self.re_flags)
         if cache_key not in self.compiled_regex_cache:
+            try:
+                evaled = eval(value)
+                if isinstance(evaled, type(re.compile(''))):
+                    self.compiled_regex_cache[cache_key] = evaled
+                    return self.compiled_regex_cache[cache_key]
+            except Exception:
+                pass
             if self.re_flags is None:
                 self.compiled_regex_cache[cache_key] = re.compile(value)
             else:
                 self.compiled_regex_cache[cache_key] = re.compile(value, flags=self.re_flags)
         return self.compiled_regex_cache[cache_key]
 
-    def from_db_value(self, value, expression, connection, context):
+    def from_db_value(self, value, expression, connection):
         return self.to_python(value)
 
     def contribute_to_class(self, cls, name, virtual_only=False):
