@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+v2.0.0
+------
+* Only support Django 2.2, 3.0, 3.1
+* Only support python 3.6, 3.7, 3.8
+
 v1.3.1
 ------
 * Fix setup file
