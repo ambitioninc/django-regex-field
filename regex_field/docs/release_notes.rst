@@ -1,6 +1,14 @@
 Release Notes
 =============
 
+v2.0.2
+------
+* Fix release
+
+v2.0.1
+------
+* Update manifest file
+
 v2.0.0
 ------
 * Only support Django 2.2, 3.0, 3.1
