@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v2.0.2
+------
+* Fix release
+
 v2.0.1
 ------
 * Update manifest file
