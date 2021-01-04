@@ -1,2 +1,7 @@
 include README.md
+include regex_field/docs/release_notes.rst
 include LICENSE
+include manage.py run_tests.py settings.py
+include tox.ini
+recursive-include requirements *.txt
+recursive-include regex_field/tests/fixtures *.json
