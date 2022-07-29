@@ -5,6 +5,7 @@ v2.1.0
 ------
 * Add support for django 3.2, 4.0, 4.1
 * Drop support for django 2.2
+* Add support for python 3.9
 * Drop support for python 3.6
 
 v2.0.2
