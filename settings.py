@@ -23,14 +23,11 @@ def configure_settings():
                 'ENGINE': 'django.db.backends.postgresql_psycopg2',
                 'NAME': 'regex_field',
                 'USER': 'postgres',
-                'PASSWORD': '',
-                'HOST': 'db',
             }
         elif test_db == 'sqlite':
             db_config = {
                 'ENGINE': 'django.db.backends.sqlite3',
                 'NAME': 'regex_field',
-                'HOST': 'db',
             }
         else:
             raise RuntimeError('Unsupported test DB {0}'.format(test_db))

@@ -18,6 +18,7 @@ env:
     - DJANGO=3.1
     - DJANGO=3.2
     - DJANGO=4.0
+    - DJANGO=4.1
     - DJANGO=master
 
 addons:
