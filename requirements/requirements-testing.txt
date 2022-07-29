@@ -3,3 +3,4 @@ coveralls
 django-nose
 mock
 psycopg2
+importlib-metadata==4.12.0 # needed to fix setup.py error
