@@ -52,4 +52,5 @@ def configure_settings():
             DEBUG=False,
             NOSE_ARGS=['--nocapture', '--nologcapture', '--verbosity=1'],
             TEST_RUNNER='django_nose.NoseTestSuiteRunner',
+            SECRET_KEY='*',
         )
