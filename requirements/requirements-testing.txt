@@ -1,5 +1,5 @@
-#coverage
-#coveralls
+coverage
+coveralls
 django-nose
 mock
 psycopg2

@@ -16,18 +16,21 @@ def configure_settings():
                 'NAME': 'ambition_test',
                 'USER': 'postgres',
                 'PASSWORD': '',
-                'HOST': 'db'
+                'HOST': 'db',
             }
         elif test_db == 'postgres':
             db_config = {
                 'ENGINE': 'django.db.backends.postgresql_psycopg2',
-                'USER': 'postgres',
                 'NAME': 'regex_field',
+                'USER': 'postgres',
+                'PASSWORD': '',
+                'HOST': 'db',
             }
         elif test_db == 'sqlite':
             db_config = {
                 'ENGINE': 'django.db.backends.sqlite3',
                 'NAME': 'regex_field',
+                'HOST': 'db',
             }
         else:
             raise RuntimeError('Unsupported test DB {0}'.format(test_db))
