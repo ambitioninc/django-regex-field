@@ -12,17 +12,18 @@ def configure_settings():
         test_db = os.environ.get('DB', None)
         if test_db is None:
             db_config = {
-                'ENGINE': 'django.db.backends.postgresql_psycopg2',
+                'ENGINE': 'django.db.backends.postgresql',
                 'NAME': 'ambition_test',
                 'USER': 'postgres',
                 'PASSWORD': '',
-                'HOST': 'db'
+                'HOST': 'db',
             }
         elif test_db == 'postgres':
             db_config = {
-                'ENGINE': 'django.db.backends.postgresql_psycopg2',
-                'USER': 'postgres',
+                'ENGINE': 'django.db.backends.postgresql',
                 'NAME': 'regex_field',
+                'USER': 'travis',
+                'PORT': '5433',
             }
         elif test_db == 'sqlite':
             db_config = {
@@ -51,4 +52,5 @@ def configure_settings():
             DEBUG=False,
             NOSE_ARGS=['--nocapture', '--nologcapture', '--verbosity=1'],
             TEST_RUNNER='django_nose.NoseTestSuiteRunner',
+            SECRET_KEY='*',
         )
