@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v3.0.2
+------
+* Fix testing env
+
 v3.0.1
 ------
 * Restore support for django 2.2
