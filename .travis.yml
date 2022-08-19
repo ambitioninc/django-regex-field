@@ -44,7 +44,7 @@ before_script:
   - psql -c 'CREATE DATABASE regex_field;' -U travis
 
 script:
-    - tox -r
+    - tox
 
 after_success:
   coveralls
