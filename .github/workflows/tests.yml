@@ -35,9 +35,9 @@ jobs:
           # https://github.com/actions/toolkit/issues/399
 #        exclude:
 #        - python: '3.7'
-#          django: 'Django>=4.0<4.1'
+#          django: 'Django~=4.0.0'
 #        - python: '3.7'
-#          django: 'Django>=4.1<4.2'
+#          django: 'Django~=4.1.0'
     services:
       postgres:
         image: postgres:latest
