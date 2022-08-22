@@ -3,3 +3,4 @@ coveralls
 django-nose
 mock
 psycopg2
+flake8
