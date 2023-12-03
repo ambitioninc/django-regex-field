@@ -75,7 +75,7 @@ class RegexField(CharField):
         if isinstance(value, type(re.compile(''))):
             return value
         else:
-            if value is None and self.null:
+            if value is None or self.null:
                 return None
             else:
                 try:
